@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      var posX = 0;
+      var posY = 0;
+      var begingup;
+      var begingdown;
+      var begingright;
+      var begingleft;
+      var widthScreen = (screen.width * 90) / 100;
+      var heightScreen = (screen.height * 9-0) / 100;
+      document.addEventListener("keydown", (event) => {
+        var astronauta = document.getElementById("astronauta");
+        var key = event.key;
+        console.log(event.key);
+        if (key == "ArrowLeft") {
+        cleaner();
+          begingleft = setInterval(moveleft, 10);
+        }
+        if (key == "ArrowRight") {
+            cleaner();
+          begingright = setInterval(moveright, 10);
+        }
+        if (key == "ArrowUp") {
+          cleaner();
+          begingup = setInterval(moveup, 10);
+        }
+        if (key == "ArrowDown") {
+         cleaner();
+          begingdown = setInterval(movedown, 10);
+        }
+      });
+
+      function moveleft() {
+        if (posX >= 0) {
+          var astronauta = document.getElementById("astronauta");
+          astronauta.style.left = posX + "px";
+          posX -= 10;
+        } else {
+          clearInterval(begingleft);
+          clearInterval(begingdown);
+          clearInterval(begingright);
+          clearInterval(begingright);
+          begingright = setInterval(moveright);
+        }
+      }
+      function moveright() {
+        if (posX <= widthScreen) {
+          var astronauta = document.getElementById("astronauta");
+          astronauta.style.left = posX + "px";
+          posX += 10;
+        } else {
+          
+          clones();
+
+          begingleft = setInterval(moveleft);
+        }
+      }
+      function movedown() {
+        if (posY <= heightScreen) {
+          var astronauta = document.getElementById("astronauta");
+          astronauta.style.top = posY + "px";
+          posY += 10;
+        } else {
+          cleaner();
+          clones();
+          begingup = setInterval(moveup);
+        }
+      }
+      function moveup() {
+        if (posY >= 0) {
+          var astronauta = document.getElementById("astronauta");
+          astronauta.style.top = posY + "px";
+          posY -= 10;
+        } else {
+          cleaner();
+          clones();
+          begingdown = setInterval(movedown);
+        }
+      }
+
+      function clones(){
+        var clone = document.createElement("img");
+          clone.src = "images/astronauta00.gif";
+          clone.style.position = "absolute";
+
+          var posXclone = Math.round(Math.random() * widthScreen);
+          var posYclone = Math.round(Math.random() * heightScreen);
+          clone.style.left = posXclone + "px";
+          clone.style.top = posYclone + "px";
+          clone.style.width=60+'px';
+          document.body.appendChild(clone);
+      }
+      function cleaner(){
+        clearInterval(begingleft);
+          clearInterval(begingdown);
+          clearInterval(begingright);
+          clearInterval(begingup);
+      }
+    </script>
+    <style>
+      .astro {
+        position: absolute;
+        width: 70px;
+      }
+    </style>
+  </head>
+  <body>
+    <img class="astro" id="astronauta" src="images/astronauta00.gif" alt="" />
+  </body>
+</html>
